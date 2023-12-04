@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-калькулятор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <label for="upperLimit">Upper limit:</label>
+    <input type="number" id="upperLimit" placeholder="Enter the upper limit here">
+
+    <label for="lowerLimit">Lower limit:</label>
+    <input type="number" id="lowerLimit" placeholder="Enter the lower limit here">
+
+    <label for="amount">Summ in euro:</label>
+    <input type="number" id="amount" placeholder="Enter the summ in euro">
+
+    <label for="exchangeRate">Euro to Ruble Exchange Rate:</label>
+    <input type="number" id="exchangeRate" placeholder="Enter the the euro to rubble exchange rate">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+    <div class="warning" id="warning"></div>
+
+    <script>
+        function calculate() {
+            var upperLimit = parseFloat(document.getElementById('upperLimit').value);
+            var lowerLimit = parseFloat(document.getElementById('lowerLimit').value);
+            var amount = parseFloat(document.getElementById('amount').value);
+            var exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
+
+            var result = amount * exchangeRate;
+
+            if (result >= lowerLimit && result <= upperLimit) {
+                document.getElementById('result').innerText = 'Result: ' + result.toFixed(2) + ' rubles or ' + amount.toFixed(2) + ' euro';
+                document.getElementById('warning').innerText = '';
+            } else if (result < lowerLimit) {
+                document.getElementById('result').innerText = 'Result: ' + (lowerLimit / exchangeRate).toFixed(2) + ' euro';
+                document.getElementById('warning').innerText = 'Attention! The value is lower the Limit';
+            } else {
+                document.getElementById('result').innerText = 'Result: ' + (upperLimit / exchangeRate).toFixed(2) + ' euro by upper Limit, and to get comfortable level of ' + amount.toFixed(2) + ' euro, ' + (exchangeRate*amount).toFixed(2) + ' rubles';
+                document.getElementById('warning').innerText = 'Attention! The value is higher the Limit';
+            }
+        }
+    </script>
+</body>
+</html>
